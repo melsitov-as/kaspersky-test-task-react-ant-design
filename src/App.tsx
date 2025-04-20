@@ -12,7 +12,7 @@ function App() {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    fetch('data.json')
+    fetch('/kaspersky-test-task-react-ant-design/data.json')
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

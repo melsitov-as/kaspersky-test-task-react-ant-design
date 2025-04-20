@@ -41,7 +41,14 @@ const AppHeader: React.FC<HeaderProps> = ({ data }) => {
           })}
         </Text>
         <Button style={{ ...styles.btnMarkStyle, marginLeft: 'auto' }}>
-          <Text style={{ ...styles.colorBlack, textTransform: 'capitalize' }}>
+          <Text
+            style={{
+              ...styles.colorBlack,
+              textTransform: 'capitalize',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
             {data?.SENT}
           </Text>
         </Button>
@@ -73,7 +80,7 @@ const AppHeader: React.FC<HeaderProps> = ({ data }) => {
           <Image
             style={{ marginTop: '-7px' }}
             width={32}
-            src={'/images/france-flag.png'}
+            src={'/kaspersky-test-task-react-ant-design/images/france-flag.png'}
           ></Image>
           <Text
             style={{

@@ -87,7 +87,9 @@ const Dublicates: React.FC<DublicatesProps> = ({ data }) => {
                   <Image
                     style={{ marginTop: '-7px' }}
                     width={20}
-                    src={'/images/france-flag.png'}
+                    src={
+                      '/kaspersky-test-task-react-ant-design/images/france-flag.png'
+                    }
                   ></Image>
                   <Text
                     style={{
