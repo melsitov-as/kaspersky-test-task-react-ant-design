@@ -1,34 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import './App.css';
 import AppHeader from './components/AppHeader/AppHeader';
 import Content from './components/Content/Content';
 import Dublicates from './components/Dublicates/Dublicates';
-
-import { IData_SnippetNews } from './interfaces/interfaces';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchData } from './store/actions';
+import { AppDispatch, RootState } from './store/store';
 
 function App() {
-  const [data, setData] = useState<IData_SnippetNews | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
+  const data = useSelector((state: RootState) => state.data.data);
+  const loading = useSelector((state: RootState) => state.data.loading);
+  const error = useSelector((state: RootState) => state.data.error);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    fetch('data.json')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((jsonData) => {
-        setData(jsonData);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err);
-        setLoading(false);
-        console.error('Ошибка при получении JSON:', err);
-      });
-  }, []);
+    dispatch(fetchData());
+  }, [dispatch]);
 
   if (loading) {
     return <div>Загрузка данных...</div>;
@@ -43,9 +30,9 @@ function App() {
       className='App'
       style={{ width: '100%', margin: '0 auto', background: '#000000' }}
     >
-      <AppHeader data={data} />
-      <Content data={data} />
-      <Dublicates data={data} />
+      <AppHeader />
+      <Content />
+      <Dublicates />
     </div>
   );
 }

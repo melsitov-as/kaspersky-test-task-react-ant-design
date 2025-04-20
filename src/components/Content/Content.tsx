@@ -3,10 +3,11 @@ import { Typography, Button, Flex, Tag } from 'antd';
 import { CaretDownFilled } from '@ant-design/icons';
 
 import * as styles from './styles';
-import { ContentProps } from '../../interfaces/interfaces';
 import ArticleComponent from '../ArticleComponent/ArticleComponent';
 import { tagWords } from '../../utils/const';
 import { nanoid } from 'nanoid';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 const { Paragraph, Text, Link } = Typography;
 
@@ -37,7 +38,8 @@ const countTags = (
   return Object.entries(tagCounts).map(([tag, count]) => ({ tag, count }));
 };
 
-const Content: React.FC<ContentProps> = ({ data }) => {
+const Content: React.FC = () => {
+  const data = useSelector((state: RootState) => state.data.data);
   const [isShowMoreTextOpened, setShowMoreTextOpened] = useState(false);
   const [isShowMoreTagsOpened, setShowMoreTagsOpened] = useState(false);
 
@@ -65,7 +67,7 @@ const Content: React.FC<ContentProps> = ({ data }) => {
               }
         }
       >
-        <ArticleComponent data={data} />
+        <ArticleComponent />
       </Paragraph>
 
       <Button
