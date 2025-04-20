@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { Typography, Flex, Button, Card, Image } from 'antd';
 import { BgColorsOutlined, DownOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
+import { IData_SnippetNews } from '../interfaces/interfaces';
 
 const { Title, Text, Link } = Typography;
+
+interface DublicatesProps {
+  data: IData_SnippetNews | null | undefined;
+}
 
 export const titleStyle = {
   color: 'rgba(255, 255, 255, 0.7)',
@@ -153,7 +159,7 @@ const user = [
   </svg>,
 ];
 
-const Dublicates: React.FC = () => {
+const Dublicates: React.FC<DublicatesProps> = ({ data }) => {
   const [isDublicatesOpened, setDublicatesOpened] = useState(false);
 
   const handleDublicatesOpened = () => setDublicatesOpened(!isDublicatesOpened);
@@ -180,76 +186,85 @@ const Dublicates: React.FC = () => {
           />
         </Button>
       </Flex>
-      {(!isDublicatesOpened
-        ? Array.from({ length: 1 })
-        : Array.from({ length: 10 })
-      ).map((_, index) => (
-        <Card style={{ ...cardStyle, padding: 0, marginBottom: '20px' }}>
-          <Flex style={flexStyle} gap='small'>
-            <Text style={textStyle}>18 Jun 2024</Text>
-            <Text style={{ ...textStyle, ...margL20 }}>211K Reach</Text>
-            <Button style={{ ...trafficBtnStyle, marginLeft: '960px' }}>
-              <Text style={colorGrey}>i</Text>
-            </Button>
-            <Button style={trafficBtnStyle}></Button>
-          </Flex>
-
-          <Title level={2} style={titleStyleCard}>
-            This is placeholder text, often used by designers to simulate the
-            look and feel...
-          </Title>
-
-          <Flex style={{ ...flexStyle, ...padTop7 }} gap='small'>
-            <Link style={flexAlCenter} href='http:\\punto-info.it'>
-              <div className='icon-box'>{globe}</div>
-              <Text
-                style={{
-                  ...textStyle,
-                  ...colorBlue,
-                  ...margL10,
-                  ...fontS21,
-                }}
-              >
-                Punto-info.it
-              </Text>
-            </Link>
-
-            <Flex style={{ ...flexStyleImage, ...margL20 }}>
-              <Image
-                style={{ marginTop: '-7px' }}
-                width={20}
-                src={'/images/austrian-flag.png'}
-              ></Image>
-              <Text
-                style={{
-                  ...textStyle,
-                  ...margL10,
-                  ...fontS21,
-                }}
-              >
-                Austria
-              </Text>
-            </Flex>
-
-            <div
-              className='header-text-wrapper'
-              style={{ ...flexAlCenter, ...margL20 }}
+      {data && data.HIGHLIGHTS ? (
+        (!isDublicatesOpened ? [data?.HIGHLIGHTS[0]] : data?.HIGHLIGHTS).map(
+          (text, index) => (
+            <Card
+              key={index}
+              style={{ ...cardStyle, padding: 0, marginBottom: '20px' }}
             >
-              <div className='icon-box'>{user}</div>
-              <Text
-                style={{
-                  ...textStyle,
-                  ...flexAlCenter,
-                  ...fontS21,
-                  ...margL10,
-                }}
-              >
-                Emily C., Taormina A., et al.
-              </Text>
-            </div>
-          </Flex>
-        </Card>
-      ))}
+              <Flex style={flexStyle} gap='small'>
+                <Text style={textStyle}>
+                  {dayjs(data?.DP).format('D MMM YYYY')}
+                </Text>
+                <Text style={{ ...textStyle, ...margL20 }}>{`${Math.floor(
+                  Number(data?.REACH) / 10
+                )}K Reach`}</Text>
+                <Button style={{ ...trafficBtnStyle, marginLeft: '960px' }}>
+                  <Text style={colorGrey}>i</Text>
+                </Button>
+                <Button style={trafficBtnStyle}></Button>
+              </Flex>
+
+              <Title level={2} style={titleStyleCard}>
+                {text}
+              </Title>
+
+              <Flex style={{ ...flexStyle, ...padTop7 }} gap='small'>
+                <Link style={flexAlCenter} href={`${data?.URL}`}>
+                  <div className='icon-box'>{globe}</div>
+                  <Text
+                    style={{
+                      ...textStyle,
+                      ...colorBlue,
+                      ...margL10,
+                      ...fontS21,
+                    }}
+                  >
+                    {data?.DOM}
+                  </Text>
+                </Link>
+
+                <Flex style={{ ...flexStyleImage, ...margL20 }}>
+                  <Image
+                    style={{ marginTop: '-7px' }}
+                    width={20}
+                    src={'/images/france-flag.png'}
+                  ></Image>
+                  <Text
+                    style={{
+                      ...textStyle,
+                      ...margL10,
+                      ...fontS21,
+                    }}
+                  >
+                    {data?.CNTR}
+                  </Text>
+                </Flex>
+
+                <div
+                  className='header-text-wrapper'
+                  style={{ ...flexAlCenter, ...margL20 }}
+                >
+                  <div className='icon-box'>{user}</div>
+                  <Text
+                    style={{
+                      ...textStyle,
+                      ...flexAlCenter,
+                      ...fontS21,
+                      ...margL10,
+                    }}
+                  >
+                    Emily C., Taormina A., et al.
+                  </Text>
+                </div>
+              </Flex>
+            </Card>
+          )
+        )
+      ) : (
+        <p style={textStyle}>There is no data to display.</p>
+      )}
 
       <Button
         style={{

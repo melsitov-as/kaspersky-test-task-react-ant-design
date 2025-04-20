@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography, Button, Flex, Tag } from 'antd';
 import { BgColorsOutlined, CaretDownFilled } from '@ant-design/icons';
 
 import * as styles from './styles';
+import { IData_SnippetNews } from '../../interfaces/interfaces';
+import ArticleComponent from '../ArticleComponent/ArticleComponent';
+
+interface HeaderProps {
+  data: IData_SnippetNews | null | undefined;
+}
 
 const { Paragraph, Text, Link } = Typography;
 
@@ -62,25 +68,54 @@ const cubeIcon = [
   </svg>,
 ];
 
-const tags = [
-  { icon: userIcon, title: 'AutoPilot5000', count: 5 },
-  { icon: innovationIcon, title: 'InnovTech', count: 5 },
-  { icon: cubeIcon, title: 'autonomous driving', count: 5 },
-  { icon: '', title: 'key word', count: 1 },
-  { icon: '', title: 'key word', count: 1 },
-  { icon: '', title: 'key word', count: 1 },
-  { icon: '', title: 'key word', count: 1 },
-  { icon: '', title: 'key word', count: 1 },
-  { icon: '', title: 'key word', count: 1 },
-  { icon: '', title: 'key word', count: 1 },
-  { icon: '', title: 'key word', count: 1 },
-  { icon: '', title: 'key word', count: 1 },
-  { icon: '', title: 'key word', count: 1 },
-  { icon: '', title: 'key word', count: 1 },
-  { icon: '', title: 'key word', count: 1 },
-];
+// const tags = [
+//   { icon: userIcon, title: 'AutoPilot5000', count: 5 },
+//   { icon: innovationIcon, title: 'InnovTech', count: 5 },
+//   { icon: cubeIcon, title: 'autonomous driving', count: 5 },
+//   { icon: '', title: 'key word', count: 1 },
+//   { icon: '', title: 'key word', count: 1 },
+//   { icon: '', title: 'key word', count: 1 },
+//   { icon: '', title: 'key word', count: 1 },
+//   { icon: '', title: 'key word', count: 1 },
+//   { icon: '', title: 'key word', count: 1 },
+//   { icon: '', title: 'key word', count: 1 },
+//   { icon: '', title: 'key word', count: 1 },
+//   { icon: '', title: 'key word', count: 1 },
+//   { icon: '', title: 'key word', count: 1 },
+//   { icon: '', title: 'key word', count: 1 },
+//   { icon: '', title: 'key word', count: 1 },
+// ];
 
-const Content: React.FC = () => {
+const tagWords = ['antivirus', 'kaspersky', 'new'];
+
+const countTags = (
+  text: string | null | undefined,
+  words: string[]
+): { tag: string; count: number }[] => {
+  if (!text) {
+    return [];
+  }
+
+  const tagCounts: { [key: string]: number } = {};
+
+  words.forEach((word) => {
+    const regex = new RegExp(word, 'gi');
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const matchedWord = match[0];
+      tagCounts[matchedWord] = (tagCounts[matchedWord] || 0) + 1;
+    }
+  });
+
+  const keyWord = 'key word';
+  for (let i = 0; i < 9; i++) {
+    tagCounts[keyWord + '-' + (i + 1)] = 1; // Или другое желаемое количество
+  }
+
+  return Object.entries(tagCounts).map(([tag, count]) => ({ tag, count }));
+};
+
+const Content: React.FC<HeaderProps> = ({ data }) => {
   const [isShowMoreTextOpened, setShowMoreTextOpened] = useState(false);
   const [isShowMoreTagsOpened, setShowMoreTagsOpened] = useState(false);
 
@@ -89,8 +124,7 @@ const Content: React.FC = () => {
   const handleShowMoreTagsOpened = () =>
     setShowMoreTagsOpened(!isShowMoreTagsOpened);
 
-  const contentText =
-    'This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here. This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here. This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here. This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here. This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here. This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here.';
+  const countedTags = countTags(data?.AB, tagWords);
 
   return (
     <div className='content-container' style={styles.containerStyle}>
@@ -109,7 +143,7 @@ const Content: React.FC = () => {
               }
         }
       >
-        {contentText}
+        <ArticleComponent data={data} />
       </Paragraph>
 
       <Button
@@ -122,8 +156,14 @@ const Content: React.FC = () => {
         }}
         onClick={handleShowMoreTextOpened}
       >
-        <Text style={{ ...styles.textStyle, ...styles.colorBlue }}>
-          Show more
+        <Text
+          style={{
+            ...styles.textStyle,
+            ...styles.colorBlue,
+            marginRight: 'auto',
+          }}
+        >
+          {!isShowMoreTextOpened ? 'Show more' : 'Hide text'}
         </Text>
         <CaretDownFilled
           style={{
@@ -135,7 +175,44 @@ const Content: React.FC = () => {
       </Button>
 
       <Flex gap={'small'} wrap={'wrap'} style={styles.margB18}>
-        {(!isShowMoreTagsOpened ? tags.slice(0, 6) : tags).map((tag, index) => (
+        {(!isShowMoreTagsOpened ? countedTags.slice(0, 6) : countedTags).map(
+          (tag, index) => (
+            <Tag
+              style={{
+                ...styles.tagStyle,
+                ...styles.margL12,
+                display: 'flex',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+              }}
+              key={index}
+            >
+              {/* <div className='icon-container'>{tag.icon}</div> */}
+              <span
+                style={{
+                  ...styles.textTagStyle,
+                  ...styles.margL7,
+                  display: 'inline-block',
+                }}
+                className='tag-title'
+              >
+                {tag.tag}
+              </span>
+              <span
+                style={{
+                  ...styles.textTagStyle,
+                  ...styles.margL7,
+                  display: 'inline-block',
+                }}
+                className='tag-count'
+              >
+                {tag.count}
+              </span>
+            </Tag>
+          )
+        )}
+
+        {/* {(!isShowMoreTagsOpened ? tags.slice(0, 6) : tags).map((tag, index) => (
           <Tag
             style={{
               ...styles.tagStyle,
@@ -168,7 +245,7 @@ const Content: React.FC = () => {
               {tag.count}
             </span>
           </Tag>
-        ))}
+        ))} */}
 
         <Button
           type='text'

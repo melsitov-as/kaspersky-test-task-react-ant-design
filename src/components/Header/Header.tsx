@@ -1,9 +1,15 @@
 import React from 'react';
 import { Button, Flex, Typography, Layout, Image } from 'antd';
 import * as styles from './styles';
+import { IData_SnippetNews } from '../../interfaces/interfaces';
+import dayjs from 'dayjs';
 
 const { Header } = Layout;
 const { Title, Text, Link } = Typography;
+
+interface HeaderProps {
+  data: IData_SnippetNews | null;
+}
 
 const globe = [
   <svg width='24px' height='24px' viewBox='0 0 32 32' version='1.1'>
@@ -68,8 +74,14 @@ const user = [
   </svg>,
 ];
 
-const _Header: React.FC = () => {
-  const trafficText = 'Top Traffic: Austria 38% USA 12% Italian 8%';
+const _Header: React.FC<HeaderProps> = ({ data }) => {
+  // const trafficText = 'Top Traffic: Austria 38% USA 12% Italian 8%';
+  const trafficText = `Top Traffic: ${data?.TRAFFIC.map((item) => {
+    const percentage = (item.count * 100).toFixed(0);
+    const countryName = item.value;
+    return `${countryName} ${percentage}%`;
+  }).join(' ')}`;
+
   return (
     <div
       className='header-container'
@@ -79,16 +91,20 @@ const _Header: React.FC = () => {
       }}
     >
       <Flex style={styles.flexStyle} gap='small'>
-        <Text style={styles.textStyle}>18 Jun 2024</Text>
+        <Text style={styles.textStyle}>
+          {dayjs(data?.DP).format('D MMM YYYY')}
+        </Text>
         <Text style={{ ...styles.textStyle, ...styles.margL20 }}>
-          211K Reach
+          {`${Math.floor(Number(data?.REACH) / 10)}K Reach`}
         </Text>
         <Text style={{ ...styles.textStyle, ...styles.margL20 }}>
           {trafficText}
         </Text>
         ;
-        <Button style={{ ...styles.btnMarkStyle, ...styles.margL505 }}>
-          <Text style={styles.colorBlack}>Positive</Text>
+        <Button style={{ ...styles.btnMarkStyle, marginLeft: 'auto' }}>
+          <Text style={{ ...styles.colorBlack, textTransform: 'capitalize' }}>
+            {data?.SENT}
+          </Text>
         </Button>
         <Button style={{ ...styles.trafficBtnStyle, ...styles.margL10 }}>
           <Text style={styles.colorGrey}>i</Text>
@@ -96,12 +112,11 @@ const _Header: React.FC = () => {
         <Button style={{ ...styles.trafficBtnStyle }}></Button>
       </Flex>
       <Title level={2} style={{ ...styles.titleStyle }}>
-        This is placeholder text, often used by designers to simulate the look
-        and feel...
+        {data?.TI}
       </Title>
 
       <Flex style={{ ...styles.flexStyle, ...styles.padTop7 }} gap='small'>
-        <Link style={styles.flexAlCenter} href='http:\\punto-info.it'>
+        <Link style={styles.flexAlCenter} href={`${data?.URL}`}>
           <div className='icon-box'>{globe}</div>
           <Text
             style={{
@@ -111,15 +126,15 @@ const _Header: React.FC = () => {
               ...styles.fontS21,
             }}
           >
-            Punto-info.it
+            {data?.DOM}
           </Text>
         </Link>
 
         <Flex style={{ ...styles.flexStyleImage, ...styles.margL20 }}>
           <Image
             style={{ marginTop: '-7px' }}
-            width={20}
-            src={'/images/austrian-flag.png'}
+            width={32}
+            src={'/images/france-flag.png'}
           ></Image>
           <Text
             style={{
@@ -128,7 +143,7 @@ const _Header: React.FC = () => {
               ...styles.fontS21,
             }}
           >
-            Austria
+            {data?.CNTR}
           </Text>
         </Flex>
 
@@ -143,9 +158,10 @@ const _Header: React.FC = () => {
               ...styles.margL10,
               ...styles.flexAlCenter,
               ...styles.fontS21,
+              textTransform: 'capitalize',
             }}
           >
-            En
+            {data?.LANG}
           </Text>
         </div>
 
