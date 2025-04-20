@@ -31,11 +31,15 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div>Загрузка данных...</div>;
+    return <div style={{ color: '#ffffff' }}> Загрузка данных...</div>;
   }
 
   if (error) {
-    return <div>Ошибка при загрузке данных: {error.message}</div>;
+    return (
+      <div style={{ color: '#ffffff' }}>
+        Ошибка при загрузке данных: {error.message}
+      </div>
+    );
   }
 
   return (
