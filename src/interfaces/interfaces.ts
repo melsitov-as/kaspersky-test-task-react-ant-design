@@ -29,3 +29,19 @@ export interface IData_TrafficItem {
   value: string; // название страны-источник траффика
   count: number; // объём траффика для указанной страны
 }
+
+export interface HeaderProps {
+  data: IData_SnippetNews | null;
+}
+
+export interface DublicatesProps {
+  data: IData_SnippetNews | null | undefined;
+}
+
+export interface ContentProps {
+  data: IData_SnippetNews | null | undefined;
+}
+
+export interface ArticleProps {
+  data: IData_SnippetNews | null | undefined;
+}

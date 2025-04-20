@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
 import './App.css';
-import _Header from './components/Header/Header';
+import AppHeader from './components/AppHeader/AppHeader';
 import Content from './components/Content/Content';
-import Dublicates from './components/Dublicates';
+import Dublicates from './components/Dublicates/Dublicates';
 
 import { IData_SnippetNews } from './interfaces/interfaces';
 
@@ -44,7 +43,7 @@ function App() {
       className='App'
       style={{ width: '100%', margin: '0 auto', background: '#000000' }}
     >
-      <_Header data={data} />
+      <AppHeader data={data} />
       <Content data={data} />
       <Dublicates data={data} />
     </div>

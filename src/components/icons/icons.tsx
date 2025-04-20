@@ -1,28 +1,15 @@
-import React from 'react';
-import { Button, Flex, Typography, Layout, Image } from 'antd';
-import * as styles from './styles';
-import { IData_SnippetNews } from '../../interfaces/interfaces';
-import dayjs from 'dayjs';
-
-const { Header } = Layout;
-const { Title, Text, Link } = Typography;
-
-interface HeaderProps {
-  data: IData_SnippetNews | null;
-}
-
 const globe = [
-  <svg width='24px' height='24px' viewBox='0 0 32 32' version='1.1'>
+  <svg
+    key='globe-icon'
+    width='24px'
+    height='24px'
+    viewBox='0 0 32 32'
+    version='1.1'
+  >
     <title>globe</title>
     <desc>Created with Sketch Beta.</desc>
     <defs></defs>
-    <g
-      id='Page-1'
-      stroke='none'
-      stroke-width='1'
-      fill='none'
-      fill-rule='evenodd'
-    >
+    <g id='Page-1' stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
       <g
         id='Icon-Set'
         transform='translate(-204.000000, -671.000000)'
@@ -39,6 +26,7 @@ const globe = [
 
 const book = [
   <svg
+    key='book-icon'
     width='24px'
     height='24px'
     viewBox='0 0 24 24'
@@ -48,15 +36,16 @@ const book = [
     <path
       d='M12 10.4V20M12 10.4C12 8.15979 12 7.03969 11.564 6.18404C11.1805 5.43139 10.5686 4.81947 9.81596 4.43597C8.96031 4 7.84021 4 5.6 4H4.6C4.03995 4 3.75992 4 3.54601 4.10899C3.35785 4.20487 3.20487 4.35785 3.10899 4.54601C3 4.75992 3 5.03995 3 5.6V16.4C3 16.9601 3 17.2401 3.10899 17.454C3.20487 17.6422 3.35785 17.7951 3.54601 17.891C3.75992 18 4.03995 18 4.6 18H7.54668C8.08687 18 8.35696 18 8.61814 18.0466C8.84995 18.0879 9.0761 18.1563 9.29191 18.2506C9.53504 18.3567 9.75977 18.5065 10.2092 18.8062L12 20M12 10.4C12 8.15979 12 7.03969 12.436 6.18404C12.8195 5.43139 13.4314 4.81947 14.184 4.43597C15.0397 4 16.1598 4 18.4 4H19.4C19.9601 4 20.2401 4 20.454 4.10899C20.6422 4.20487 20.7951 4.35785 20.891 4.54601C21 4.75992 21 5.03995 21 5.6V16.4C21 16.9601 21 17.2401 20.891 17.454C20.7951 17.6422 20.6422 17.7951 20.454 17.891C20.2401 18 19.9601 18 19.4 18H16.4533C15.9131 18 15.643 18 15.3819 18.0466C15.15 18.0879 14.9239 18.1563 14.7081 18.2506C14.465 18.3567 14.2402 18.5065 13.7908 18.8062L12 20'
       stroke='rgba(255, 255, 255, 0.7)'
-      stroke-width='2'
-      stroke-linecap='round'
-      stroke-linejoin='round'
+      strokeWidth='2'
+      strokeLinecap='round'
+      strokeLinejoin='round'
     />
   </svg>,
 ];
 
 const user = [
   <svg
+    key='user-icon'
     width='24px'
     height='24px'
     viewBox='0 0 16 16'
@@ -74,116 +63,4 @@ const user = [
   </svg>,
 ];
 
-const _Header: React.FC<HeaderProps> = ({ data }) => {
-  // const trafficText = 'Top Traffic: Austria 38% USA 12% Italian 8%';
-  const trafficText = `Top Traffic: ${data?.TRAFFIC.map((item) => {
-    const percentage = (item.count * 100).toFixed(0);
-    const countryName = item.value;
-    return `${countryName} ${percentage}%`;
-  }).join(' ')}`;
-
-  return (
-    <div
-      className='header-container'
-      style={{
-        width: '1380px',
-        margin: '0 auto',
-      }}
-    >
-      <Flex style={styles.flexStyle} gap='small'>
-        <Text style={styles.textStyle}>
-          {dayjs(data?.DP).format('D MMM YYYY')}
-        </Text>
-        <Text style={{ ...styles.textStyle, ...styles.margL20 }}>
-          {`${Math.floor(Number(data?.REACH) / 10)}K Reach`}
-        </Text>
-        <Text style={{ ...styles.textStyle, ...styles.margL20 }}>
-          {trafficText}
-        </Text>
-        ;
-        <Button style={{ ...styles.btnMarkStyle, marginLeft: 'auto' }}>
-          <Text style={{ ...styles.colorBlack, textTransform: 'capitalize' }}>
-            {data?.SENT}
-          </Text>
-        </Button>
-        <Button style={{ ...styles.trafficBtnStyle, ...styles.margL10 }}>
-          <Text style={styles.colorGrey}>i</Text>
-        </Button>
-        <Button style={{ ...styles.trafficBtnStyle }}></Button>
-      </Flex>
-      <Title level={2} style={{ ...styles.titleStyle }}>
-        {data?.TI}
-      </Title>
-
-      <Flex style={{ ...styles.flexStyle, ...styles.padTop7 }} gap='small'>
-        <Link style={styles.flexAlCenter} href={`${data?.URL}`}>
-          <div className='icon-box'>{globe}</div>
-          <Text
-            style={{
-              ...styles.textStyle,
-              ...styles.colorBlue,
-              ...styles.margL10,
-              ...styles.fontS21,
-            }}
-          >
-            {data?.DOM}
-          </Text>
-        </Link>
-
-        <Flex style={{ ...styles.flexStyleImage, ...styles.margL20 }}>
-          <Image
-            style={{ marginTop: '-7px' }}
-            width={32}
-            src={'/images/france-flag.png'}
-          ></Image>
-          <Text
-            style={{
-              ...styles.textStyle,
-              ...styles.margL10,
-              ...styles.fontS21,
-            }}
-          >
-            {data?.CNTR}
-          </Text>
-        </Flex>
-
-        <div
-          className='header-text-wrapper'
-          style={{ ...styles.flexAlCenter, ...styles.margL20 }}
-        >
-          <div className='icon-box'>{book}</div>
-          <Text
-            style={{
-              ...styles.textStyle,
-              ...styles.margL10,
-              ...styles.flexAlCenter,
-              ...styles.fontS21,
-              textTransform: 'capitalize',
-            }}
-          >
-            {data?.LANG}
-          </Text>
-        </div>
-
-        <div
-          className='header-text-wrapper'
-          style={{ ...styles.flexAlCenter, ...styles.margL20 }}
-        >
-          <div className='icon-box'>{user}</div>
-          <Text
-            style={{
-              ...styles.textStyle,
-              ...styles.flexAlCenter,
-              ...styles.fontS21,
-              ...styles.margL10,
-            }}
-          >
-            Emily C., Taormina A., et al.
-          </Text>
-        </div>
-      </Flex>
-    </div>
-  );
-};
-
-export default _Header;
+export { globe, book, user };
