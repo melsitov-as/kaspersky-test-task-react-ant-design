@@ -34240,7 +34240,7 @@
                       (0, yh.jsx)(th, {
                         style: { marginTop: '-7px' },
                         width: 32,
-                        src: '/images/france-flag.png',
+                        src: '/kaspersky-test-task-react-ant-design/images/france-flag.png',
                       }),
                       (0, yh.jsx)(kh, {
                         style: { ...oh, ...lh, ...mh },
@@ -42711,7 +42711,7 @@
                                   (0, yh.jsx)(th, {
                                     style: { marginTop: '-7px' },
                                     width: 20,
-                                    src: 'images/france-flag.png',
+                                    src: '/kaspersky-test-task-react-ant-design/images/france-flag.png',
                                   }),
                                   (0, yh.jsx)(Ex, {
                                     style: { ...px, ...gx, ...Sx },
