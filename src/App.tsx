@@ -41,7 +41,12 @@ function App() {
   return (
     <div
       className='App'
-      style={{ width: '100%', margin: '0 auto', background: '#000000' }}
+      style={{
+        width: '100%',
+        margin: '0 auto',
+        background:
+          'linear-gradient(to bottom, transparent 0, transparent 800px, black 800px)',
+      }}
     >
       <AppHeader data={data} />
       <Content data={data} />
