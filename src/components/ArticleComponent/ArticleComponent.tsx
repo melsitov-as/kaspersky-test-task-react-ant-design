@@ -1,8 +1,7 @@
 import React from 'react';
 import DOMPurify from 'dompurify';
+import { ArticleProps } from '../../interfaces/interfaces';
 import { tagWords } from '../../utils/const';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
 
 const markTags = (text: string | null | undefined, words: string[]) => {
   if (!text) {
@@ -22,9 +21,7 @@ const markTags = (text: string | null | undefined, words: string[]) => {
   return modifiedText;
 };
 
-const ArticleComponent: React.FC = () => {
-  const data = useSelector((state: RootState) => state.data.data);
-
+const ArticleComponent: React.FC<ArticleProps> = ({ data }) => {
   const highlightedText: string | null | undefined = markTags(
     data?.AB,
     tagWords

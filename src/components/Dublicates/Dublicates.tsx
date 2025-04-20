@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { Typography, Flex, Button, Card, Image } from 'antd';
-import dayjs from 'dayjs';
 import { DownOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
+import { DublicatesProps } from '../../interfaces/interfaces';
 import * as styles from './styles';
 import { globe, user } from '../icons/icons';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
 
 const { Title, Text, Link } = Typography;
 
-const Dublicates: React.FC = () => {
-  const data = useSelector((state: RootState) => state.data.data);
+const Dublicates: React.FC<DublicatesProps> = ({ data }) => {
   const [isDublicatesOpened, setDublicatesOpened] = useState(false);
 
   const handleDublicatesOpened = () => setDublicatesOpened(!isDublicatesOpened);

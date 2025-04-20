@@ -1,18 +1,14 @@
 import React from 'react';
 import { Button, Flex, Typography, Image } from 'antd';
 import * as styles from './styles';
-// import { HeaderProps } from '../../interfaces/interfaces';
+import { HeaderProps } from '../../interfaces/interfaces';
 import dayjs from 'dayjs';
 import { nanoid } from 'nanoid';
 import { globe, book, user } from '../icons/icons';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
 
 const { Title, Text, Link } = Typography;
 
-const AppHeader: React.FC = () => {
-  const data = useSelector((state: RootState) => state.data.data);
-
+const AppHeader: React.FC<HeaderProps> = ({ data }) => {
   return (
     <div
       className='header-container'
