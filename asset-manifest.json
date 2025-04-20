@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/kaspersky-test-task-react-ant-design/static/css/main.1e57188a.css",
+    "main.js": "/kaspersky-test-task-react-ant-design/static/js/main.30acb21d.js",
+    "index.html": "/kaspersky-test-task-react-ant-design/index.html",
+    "main.1e57188a.css.map": "/kaspersky-test-task-react-ant-design/static/css/main.1e57188a.css.map",
+    "main.30acb21d.js.map": "/kaspersky-test-task-react-ant-design/static/js/main.30acb21d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1e57188a.css",
+    "static/js/main.30acb21d.js"
+  ]
+}
