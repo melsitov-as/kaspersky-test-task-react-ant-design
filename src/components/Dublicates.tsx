@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, Flex, Button, Card, Image } from 'antd';
 import { BgColorsOutlined, DownOutlined } from '@ant-design/icons';
 
@@ -15,7 +15,7 @@ export const titleStyle = {
 export const containerStyle = {
   padding: '0 0 40px 17px',
   'box-sizing': 'border-box',
-  background: 'transparent',
+  background: 'black',
   width: '1380px',
   margin: '0 auto',
 };
@@ -154,6 +154,10 @@ const user = [
 ];
 
 const Dublicates: React.FC = () => {
+  const [isDublicatesOpened, setDublicatesOpened] = useState(false);
+
+  const handleDublicatesOpened = () => setDublicatesOpened(!isDublicatesOpened);
+
   return (
     <div className='dublicates-container' style={containerStyle}>
       <Flex
@@ -165,7 +169,7 @@ const Dublicates: React.FC = () => {
         }}
       >
         <Title style={titleStyle} level={3}>
-          Dublicates: 192
+          Dublicates: 10
         </Title>
         <Button style={dFlexButton} type={'text'}>
           <Text style={{ ...colorLightGrey, fontSize: '24px' }}>
@@ -176,72 +180,76 @@ const Dublicates: React.FC = () => {
           />
         </Button>
       </Flex>
-
-      <Card style={{ ...cardStyle, padding: 0, marginBottom: '20px' }}>
-        <Flex style={flexStyle} gap='small'>
-          <Text style={textStyle}>18 Jun 2024</Text>
-          <Text style={{ ...textStyle, ...margL20 }}>211K Reach</Text>
-          <Button style={{ ...trafficBtnStyle, marginLeft: '960px' }}>
-            <Text style={colorGrey}>i</Text>
-          </Button>
-          <Button style={trafficBtnStyle}></Button>
-        </Flex>
-
-        <Title level={2} style={titleStyleCard}>
-          This is placeholder text, often used by designers to simulate the look
-          and feel...
-        </Title>
-
-        <Flex style={{ ...flexStyle, ...padTop7 }} gap='small'>
-          <Link style={flexAlCenter} href='http:\\punto-info.it'>
-            <div className='icon-box'>{globe}</div>
-            <Text
-              style={{
-                ...textStyle,
-                ...colorBlue,
-                ...margL10,
-                ...fontS21,
-              }}
-            >
-              Punto-info.it
-            </Text>
-          </Link>
-
-          <Flex style={{ ...flexStyleImage, ...margL20 }}>
-            <Image
-              style={{ marginTop: '-7px' }}
-              width={20}
-              src={'/images/austrian-flag.png'}
-            ></Image>
-            <Text
-              style={{
-                ...textStyle,
-                ...margL10,
-                ...fontS21,
-              }}
-            >
-              Austria
-            </Text>
+      {(!isDublicatesOpened
+        ? Array.from({ length: 1 })
+        : Array.from({ length: 10 })
+      ).map((_, index) => (
+        <Card style={{ ...cardStyle, padding: 0, marginBottom: '20px' }}>
+          <Flex style={flexStyle} gap='small'>
+            <Text style={textStyle}>18 Jun 2024</Text>
+            <Text style={{ ...textStyle, ...margL20 }}>211K Reach</Text>
+            <Button style={{ ...trafficBtnStyle, marginLeft: '960px' }}>
+              <Text style={colorGrey}>i</Text>
+            </Button>
+            <Button style={trafficBtnStyle}></Button>
           </Flex>
 
-          <div
-            className='header-text-wrapper'
-            style={{ ...flexAlCenter, ...margL20 }}
-          >
-            <div className='icon-box'>{user}</div>
-            <Text
-              style={{
-                ...textStyle,
-                ...flexAlCenter,
-                ...fontS21,
-                ...margL10,
-              }}
+          <Title level={2} style={titleStyleCard}>
+            This is placeholder text, often used by designers to simulate the
+            look and feel...
+          </Title>
+
+          <Flex style={{ ...flexStyle, ...padTop7 }} gap='small'>
+            <Link style={flexAlCenter} href='http:\\punto-info.it'>
+              <div className='icon-box'>{globe}</div>
+              <Text
+                style={{
+                  ...textStyle,
+                  ...colorBlue,
+                  ...margL10,
+                  ...fontS21,
+                }}
+              >
+                Punto-info.it
+              </Text>
+            </Link>
+
+            <Flex style={{ ...flexStyleImage, ...margL20 }}>
+              <Image
+                style={{ marginTop: '-7px' }}
+                width={20}
+                src={'/images/austrian-flag.png'}
+              ></Image>
+              <Text
+                style={{
+                  ...textStyle,
+                  ...margL10,
+                  ...fontS21,
+                }}
+              >
+                Austria
+              </Text>
+            </Flex>
+
+            <div
+              className='header-text-wrapper'
+              style={{ ...flexAlCenter, ...margL20 }}
             >
-              Emily C., Taormina A., et al.
-            </Text>
-          </div>
-        </Flex>
-      </Card>
+              <div className='icon-box'>{user}</div>
+              <Text
+                style={{
+                  ...textStyle,
+                  ...flexAlCenter,
+                  ...fontS21,
+                  ...margL10,
+                }}
+              >
+                Emily C., Taormina A., et al.
+              </Text>
+            </div>
+          </Flex>
+        </Card>
+      ))}
 
       <Button
         style={{
@@ -251,9 +259,15 @@ const Dublicates: React.FC = () => {
           padding: '24px 0',
         }}
         type={'text'}
+        onClick={handleDublicatesOpened}
       >
         <DownOutlined
-          style={{ ...colorGrey, fontSize: '22px', marginTop: '5px' }}
+          style={{
+            ...colorGrey,
+            fontSize: '22px',
+            marginTop: '5px',
+            transform: isDublicatesOpened ? 'rotate(180deg)' : 'rotate(0deg)',
+          }}
         />
         <Text style={{ ...colorGrey, fontSize: '22px' }}>View Dublicates</Text>
       </Button>

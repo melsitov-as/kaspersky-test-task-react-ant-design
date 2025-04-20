@@ -69,26 +69,45 @@ const tags = [
   { icon: '', title: 'key word', count: 1 },
   { icon: '', title: 'key word', count: 1 },
   { icon: '', title: 'key word', count: 1 },
+  { icon: '', title: 'key word', count: 1 },
+  { icon: '', title: 'key word', count: 1 },
+  { icon: '', title: 'key word', count: 1 },
+  { icon: '', title: 'key word', count: 1 },
+  { icon: '', title: 'key word', count: 1 },
+  { icon: '', title: 'key word', count: 1 },
+  { icon: '', title: 'key word', count: 1 },
+  { icon: '', title: 'key word', count: 1 },
+  { icon: '', title: 'key word', count: 1 },
 ];
 
 const Content: React.FC = () => {
-  const [isShowMoreOpened, setShowMoreOpened] = useState(false);
+  const [isShowMoreTextOpened, setShowMoreTextOpened] = useState(false);
+  const [isShowMoreTagsOpened, setShowMoreTagsOpened] = useState(false);
 
-  const handleShowMoreOpened = () => setShowMoreOpened(!isShowMoreOpened);
+  const handleShowMoreTextOpened = () =>
+    setShowMoreTextOpened(!isShowMoreTextOpened);
+  const handleShowMoreTagsOpened = () =>
+    setShowMoreTagsOpened(!isShowMoreTagsOpened);
 
   const contentText =
-    'This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here. This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here.';
+    'This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here. This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here. This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here. This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here. This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here. This is placeholder text. Replace it with your actual content. This section is meant to provide information about topic of the section. Feel free to add details, explanations, and engaging content here.';
 
   return (
     <div className='content-container' style={styles.containerStyle}>
       <Paragraph
-        // ellipsis={{ rows: 2, expandable: true }}
-        // isExpanded ? просто текст : ellipsis={{rows: 2, expandable: true }}
         style={{
           ...styles.textStyle,
           ...styles.tAlignLeft,
           ...styles.margBottom02,
         }}
+        ellipsis={
+          isShowMoreTextOpened
+            ? false
+            : {
+                rows: 3, // Усечение до двух строк
+                onExpand: handleShowMoreTextOpened, // Функция, вызываемая при раскрытии
+              }
+        }
       >
         {contentText}
       </Paragraph>
@@ -101,15 +120,22 @@ const Content: React.FC = () => {
           padding: 0,
           ...styles.margB25,
         }}
+        onClick={handleShowMoreTextOpened}
       >
         <Text style={{ ...styles.textStyle, ...styles.colorBlue }}>
           Show more
         </Text>
-        <CaretDownFilled style={{ ...styles.colorBlue, fontSize: '18px' }} />
+        <CaretDownFilled
+          style={{
+            ...styles.colorBlue,
+            fontSize: '18px',
+            transform: isShowMoreTextOpened ? 'rotate(180deg)' : 'rotate(0deg)',
+          }}
+        />
       </Button>
 
-      <Flex gap={'small'} style={styles.margB18}>
-        {tags.map((tag, index) => (
+      <Flex gap={'small'} wrap={'wrap'} style={styles.margB18}>
+        {(!isShowMoreTagsOpened ? tags.slice(0, 6) : tags).map((tag, index) => (
           <Tag
             style={{
               ...styles.tagStyle,
@@ -152,11 +178,20 @@ const Content: React.FC = () => {
             padding: 0,
             ...styles.margB25,
           }}
+          onClick={handleShowMoreTagsOpened}
         >
           <Text style={{ ...styles.textStyleSmall, ...styles.colorBlue }}>
-            Show more +9
+            {!isShowMoreTagsOpened ? 'Show more +9' : 'Hide tags -9'}
           </Text>
-          <CaretDownFilled style={{ ...styles.colorBlue, fontSize: '18px' }} />
+          <CaretDownFilled
+            style={{
+              ...styles.colorBlue,
+              fontSize: '18px',
+              transform: isShowMoreTagsOpened
+                ? 'rotate(180deg)'
+                : 'rotate(0deg)',
+            }}
+          />
         </Button>
       </Flex>
 
